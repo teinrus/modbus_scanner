@@ -174,6 +174,18 @@ def save_config_to_file(target_ip, port, start_address, num_registers, byteorder
 # Функция загрузки конфигурации из конфигурационного файла
 def load_config_from_file():
     config = configparser.ConfigParser()
+    if not config.read('config.ini'):
+    # Если файл не существует, создаем его с базовыми значениями
+        config['Modbus'] = {
+            'target_ip': '',
+            'port': '502',
+            'start_address': '4000',
+            'num_registers': '100',
+            'byteorder': '>',
+            'wordorder': '>',
+            'decode_function': 'decode_16bit_uint',
+            'count': '100'
+        }
     config.read('config.ini')
     return config['Modbus']
 
